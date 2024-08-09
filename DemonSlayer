@@ -1,0 +1,55 @@
+-- Load Kavo UI Library
+local Kavo = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+
+-- Create the UI
+local Window = Kavo.CreateLib("DurexHub (BETA) DSlayer", "DarkTheme")
+
+-- Create a Tab
+local Tab = Window:NewTab("Main")
+
+-- Create a Section
+local Section = Tab:NewSection("Main Features")
+
+-- Add a Toggle Button to Start/Stop Clicking
+local clicking = false
+Section:NewToggle("Toggle Clicking", "Toggle the automation on/off", function(state)
+    clicking = state
+    if clicking then
+        -- Start the automation in a separate thread
+        spawn(function()
+            while clicking do
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayerClickAttack"):FireServer()
+                wait(0.1) -- Adjust the interval as needed
+            end
+        end)
+    end
+end)
+    
+-- Add a Toggle Button to Activate/Deactivate Auto Hatch
+local hatching = false
+Section:NewToggle("Toggle Auto Hatch", "Toggle the auto hatching on/off", function(state)
+    hatching = state
+    if hatching then
+        -- Start the auto hatch in a separate thread
+        spawn(function()
+            local args = {
+                [1] = {
+                    ["drawCardPlatformId"] = 70001,
+                    ["count"] = 1
+                }
+            }
+            while hatching do
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ExtractHero"):InvokeServer(unpack(args))
+                wait(1) -- Adjust the interval as needed
+            end
+        end)
+    end
+end)
+
+Section:NewSlider("Walk Speed", "Adjust your walk speed", 100, 16, function(value)
+    -- Set the player's walk speed
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid.WalkSpeed = value
+    end
+end)
