@@ -34,7 +34,7 @@ loadstring(game:HttpGet("https://scriptblox.com/raw/UPD-Blade-Ball-op-autoparry-
     print("Clicked")
 end)
 
-Section:NewButton("God Auto Parry/Spam", "Best AUTO parry", function()
+MainSection:NewButton("God Auto Parry/Spam", "Best AUTO parry", function()
 getgenv().config = getgenv().config or {
     hit_time = 0.5, -- // recommended 0.25 to 0.75 \ --
  
