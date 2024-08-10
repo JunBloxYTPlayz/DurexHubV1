@@ -1,0 +1,35 @@
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/vff1bQ9F"))()
+local Window = Library.CreateLib("Durex Hub |•Blade Ball", "DarkTheme")
+
+local MainTab = Window:NewTab("Main")
+local MainSection = MainTab:NewSection("Blade Ball Uki")
+
+MainSection:NewButton("Auto Buy Sword Crate", "Auto Buy Crate", function()
+    local function openCrate()
+    -- Remote event to initiate crate opening
+    local eventArgs = {
+        [1] = "OpeningCase",
+        [2] = false
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("RemoteEvent"):FireServer(unpack(eventArgs))
+
+    -- Remote function to prompt crate purchase
+    local functionArgs = {
+        [1] = "PromptPurchaseCrate",
+        [2] = workspace:WaitForChild("Spawn"):WaitForChild("Crates"):WaitForChild("NormalSwordCrate")
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("RemoteFunction"):InvokeServer(unpack(functionArgs))
+end
+
+-- Loop to continuously open crates
+while true do
+    openCrate()
+    wait(4) -- Adjust the wait time as needed to match the crate opening duration
+end
+    print("Clicked")
+end)
+
+MainSection:NewButton("Auto Parry", "Auto Parry Ball", function()
+loadstring(game:HttpGet("https://scriptblox.com/raw/UPD-Blade-Ball-op-autoparry-with-visualizer-8652"))()
+    print("Clicked")
+end)
